@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import androidx.fragment.app.FragmentManager
 import com.primateknos.infocovid_19.dataCovid.DataCovidActivity
 import com.primateknos.infocovid_19.dataCovid.DataCovidContract
+import com.primateknos.infocovid_19.info.InfoFragment
+import com.primateknos.infocovid_19.materi.ListActivity
 import com.primateknos.infocovid_19.model.DataCovidData
+import com.primateknos.infocovid_19.sosialisasi.SosialisasiFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    lateinit var fm: FragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -23,6 +28,25 @@ class MainActivity : AppCompatActivity() {
 
         datacovid.setOnClickListener {
             val i = Intent(this@MainActivity, DataCovidActivity::class.java)
+            startActivity(i)
+        }
+        fm=supportFragmentManager
+        sosialisasi.setOnClickListener {
+            val mainFragment: SosialisasiFragment = SosialisasiFragment()
+
+            fm.beginTransaction().add(R.id.container, mainFragment)
+                .commit()
+        }
+
+        infoButton.setOnClickListener {
+            val mainFragment: InfoFragment = InfoFragment()
+
+            fm.beginTransaction().add(R.id.container, mainFragment)
+                .commit()
+        }
+
+        materi.setOnClickListener {
+            val i = Intent(this@MainActivity, ListActivity::class.java)
             startActivity(i)
         }
     }
